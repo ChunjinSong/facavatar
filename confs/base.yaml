@@ -1,0 +1,12 @@
+hydra:
+    run:
+        dir: "./outputs/${project_name}/${run}"
+
+defaults:
+  - model: model
+  - dataset: video
+  - _self_
+
+seed: 42
+project_name: 'fac-avatar'
+run: ${dataset.metainfo.subject}

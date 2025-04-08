@@ -1,0 +1,98 @@
+learning_rate: 5.0e-4
+hf_learning_rate: 2.0e-4
+density_learning_rate: 1.0e-4
+sched_milestones : [200, 400]
+sched_factor : 0.5
+is_continue: False
+use_smpl_deformer: True
+n_sdf_samp: 512
+mode: 'gpu2'
+max_step: 200000
+epoch_save: 100
+step_start_cond_pose: 10000
+epoch_inter_cond_pose: 50
+
+lf_implicit_network:
+    feature_vector_size: 256
+    d_in: 3
+    d_out: 1
+    d_hid: 256
+    n_layers: 4
+    init: 'geometry'
+    bias: 0.6
+    skip_in: [-1]
+    weight_norm: True
+    embedder_mode: 'fourier'
+    multires: 5
+    cond: 'none' #'smpl'
+    scene_bounding_sphere: 3.0
+
+lf_rendering_network:
+    feature_vector_size: 256
+    mode: 'none'
+    d_in:  6
+    d_out: 3
+    d_hid: 256
+    n_layers: 2
+    weight_norm: True
+    multires_view: -1
+
+hf_implicit_network:
+    feature_vector_size: 256
+    d_in: 3
+    d_out: 1
+    d_hid: 256
+    n_layers: 8
+    init: 'geometry'
+    bias: 0.6
+    skip_in: [3]
+    weight_norm: True
+    embedder_mode: 'fourier'
+    d_lf_feat: 8
+    multires: 10
+    min_freq: 0.0
+    include_input: True
+    cond: 'smpl'
+    scene_bounding_sphere: 3.0
+
+hf_rendering_network:
+    feature_vector_size: 256
+    mode: 'pose'
+    d_in: 6
+    d_out: 3
+    d_hid: 256
+    n_layers: 4
+    weight_norm: True
+    multires_view: -1
+    use_framecodes: False
+    framecode_ch: 128
+
+density:
+    params_init: {beta: 0.1}
+    beta_min: 0.0001
+
+ray_sampler:
+    near: 0.0
+    N_samples: 64
+    N_samples_eval: 128
+    N_samples_extra: 32
+    eps: 0.1
+    beta_iters: 10
+    max_total_iters: 5
+    N_samples_inverse_sphere: 32
+    add_tiny: 1.0e-6
+
+loss:
+    eikonal_weight : 0.1
+    lf_eikonal_weight : 0.0
+    mask_weight: 0.1
+    step_start_lpips: 20000
+    lpips_weight: 1.0
+    rgb_weight: 1.0
+    lf_rgb_weight: 0.5
+    s3im_weight: 0.1
+    s3im_kernel: 4
+    s3im_stride: 4
+    s3im_repeat: 10
+    s3im_patch: 24
+
