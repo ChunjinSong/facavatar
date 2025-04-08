@@ -1,6 +1,4 @@
 # Representing Animatable Avatar via Factorized Neural Fields
-## [Paper]() 
-
 
 Official Repository for SGP 2025 paper [*Representing Animatable Avatar via Factorized Neural Fields*](). 
 
